@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="task_manager.css">
+</head>
+<body>
+    <h2>TASK MANAGER</h2>
+    <hr>
+    <div class="container">
+        <input type="text" id="task_input" placeholder="Enter Your Task">
+        <input type="date" id="due_date_input">
+        <button id="add_task_btn">Add Task</button>
+    </div>
+
+    <div class="heading">
+        <p>TASKS</p>
+        <p>DUE DATE</p>
+    </div>
+    <div id="display_tasks">
+        
+    </div>
+</body>
+<script>
+    let task = document.getElementById("task_input");
+    let due_date = document.getElementById("due_date_input");
+    let add_btn =  document.getElementById("add_task_btn");
+    
+    let task_list = []
+
+    function add_task(){
+
+        let user_task = task.value;
+        let user_due_date = due_date.value;
+
+        let task_p = document.createElement("p");
+        task_p.innerText = user_task;
+
+        let due_date_p = document.createElement("p");
+        due_date_p.innerText = user_due_date;
+        
+        let display = document.getElementById("display_tasks");
+        let list = display.append(task_p, due_date_p);
+        
+    }
+
+    add_btn.addEventListener("click",function(ev){
+        
+        let user_task = task.value;
+        let user_due_date = due_date.value;
+
+        const taskList = {
+            Task: user_task,
+            Due_Date: user_due_date,
+        };
+        task_list.push(taskList);
+        console.log(task_list);
+
+        function arrange_by_date(a,b){
+        return a.Due_Date - b.Due_Date;
+    }
+    let sorted_tasks = task_list.sort(arrange_by_date);
+    localStorage.setItem("Task List", JSON.stringify(sorted_tasks));
+        add_task(sorted_tasks);
+
+    });
+
+    function getAndShow(){
+        const tskList = JSON.parse(localStorage.getItem("Task List"));
+        for(taskObj of tskList){
+            add_task(taskObj);
+        }
+    }
+    getAndShow();
+
+</script>
+</html>

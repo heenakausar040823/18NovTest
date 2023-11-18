@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS Calculator</title>
+    <link rel="stylesheet" href="calculator.css">
+</head>
+<body>
+    <div class="container">
+
+        <div class="display-div">
+            <p class="display-text" id="display"></p>
+        </div>
+
+        <div class="buttons-div">
+            <div class="row">
+                <button>1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>4</button>
+            </div>
+            <div class="row">
+                <button>5</button>
+                <button>6</button>
+                <button>7</button>
+                <button>8</button>
+            </div>
+            <div class="row">
+                <button>9</button>
+                <button>0</button>
+                <button>C</button>
+                <button>=</button>
+            </div>
+            <div class="row">
+                <button>+</button>
+                <button>-</button>
+                <button>*</button>
+                <button>/</button>
+            </div>
+        </div>
+    </div>
+</body>
+<script>
+    const display = document.getElementById("display");
+    function add_in_display(e){
+        let prev_num = e.target.innerText;
+        let curr_num = display.innerText;
+        let num = curr_num + prev_num;
+        display.innerText = num;
+        
+        if(prev_num === "C"){
+            display.innerText = "";
+        }
+        else if(prev_num === "="){
+            const result = eval(curr_num);
+            display.innerText = result;
+        }
+    }
+    const btnList = document.querySelectorAll("button");
+    for(i=0; i<btnList.length;i++){
+        // console.log(btnList[i]);
+        btnList[i].addEventListener("click",add_in_display);
+    }
+</script>
+</html>
